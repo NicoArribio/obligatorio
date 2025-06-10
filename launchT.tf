@@ -6,36 +6,26 @@ variable "key_name" {
   type        = string
 }
 
-variable "vpc_id" {
-  description = "ID de la VPC donde se desplegarán los recursos."
-  type        = string
-}
 
-variable "load_balancer_sg_id" {
-  description = "El ID del Security Group del Load Balancer (te lo pasa tu compañero)."
-  type        = string
-}
-
-
-# --- Recursos que tú creas ---
-
-# 1. Grupo de Seguridad para las Instancias del Auto Scaling
-# Este SG se asignará a cada instancia que se lance.
+#Grupo de Seguridad para las Instancias del Auto Scaling
 resource "aws_security_group" "instancia_sg" {
   name        = "instancia-autoscaling-sg"
   description = "Permite tráfico desde el Load Balancer y SSH"
-  vpc_id      = var.vpc_id # Importante para que se cree en la VPC correcta.
+  
+  
+  vpc_id      = aws_vpc.ob-vpc.id 
 
   # Regla de ENTRADA: Permite tráfico web (HTTP) SOLO desde el Load Balancer.
   ingress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [var.load_balancer_sg_id] # ¡Conexión clave!
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+
+   
+    security_groups = [aws_security_group.ac1-lb-sg.id] 
   }
 
   # Regla de ENTRADA: Permite tu conexión SSH para mantenimiento.
-  # ADVERTENCIA: Para producción, restringe "cidr_blocks" a tu IP.
   ingress {
     from_port   = 22
     to_port     = 22
@@ -43,7 +33,7 @@ resource "aws_security_group" "instancia_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Regla de SALIDA: Permite a la instancia conectarse a internet (para actualizaciones, etc.).
+  # Regla de SALIDA: Permite a la instancia conectarse a internet.
   egress {
     from_port   = 0
     to_port     = 0
@@ -56,7 +46,7 @@ resource "aws_security_group" "instancia_sg" {
   }
 }
 
-# 2. Búsqueda de la última AMI (Imagen) de Amazon Linux 2
+#Búsqueda de la última AMI de Amazon Linux 2
 data "aws_ami" "amazon_linux_2" {
   most_recent = true
   owners      = ["amazon"]
@@ -66,18 +56,17 @@ data "aws_ami" "amazon_linux_2" {
   }
 }
 
-# 3. Plantilla de Lanzamiento (Launch Template) para el Auto Scaling
+# Plantilla Launch Template para el Auto Scaling
 resource "aws_launch_template" "mi_launch_template" {
-  name_prefix = "asg-lt-"
-
+   name = "Launch-template-obligatorio"
   image_id      = data.aws_ami.amazon_linux_2.id
   instance_type = "t2.micro"
   key_name      = var.key_name
 
-  # Asociamos el Security Group que creamos justo arriba.
+  #Asocia el Security Group creado.
   vpc_security_group_ids = [aws_security_group.instancia_sg.id]
 
-  # Script para instalar un servidor web al iniciar.
+  # Script para instalar el servicio httpd al iniciar.
   user_data = base64encode(<<-EOF
               #!/bin/bash
               yum update -y
@@ -93,10 +82,8 @@ resource "aws_launch_template" "mi_launch_template" {
   }
 }
 
-
 # --- Salidas (Outputs) ---
 # Estos son los datos que tu código le entrega al resto del proyecto.
-
 output "launch_template_id" {
   description = "El ID de la plantilla de lanzamiento para usar en el Auto Scaling Group."
   value       = aws_launch_template.mi_launch_template.id
