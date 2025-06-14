@@ -26,10 +26,12 @@ resource "aws_security_group" "ob-sg" {
     to_port     = 3306
     protocol    = "tcp"
     
-    # Sólo permite consultas desde nuestras subnets públicas
-    cidr_blocks = [aws_subnet.ob-public-subnet.cidr_block, 
-                   aws_subnet.ob-public-subnet2.cidr_block] 
+    # Sólo permite consultas desde nuestras subnets privadas
+    cidr_blocks = [aws_subnet.ob-private-subnet.cidr_block, 
+                   aws_subnet.ob-private-subnet2.cidr_block] 
   }
+
+# Permite ssh para adininistracion
 
   ingress {
     description = "Allow SSH"

@@ -36,3 +36,7 @@ resource "aws_db_instance" "ob_database" {
     Name = "OB-Database"
   }
 }
+
+output "rds_endpoint" {
+  value = aws_db_instance.ob_database.endpoint
+}
