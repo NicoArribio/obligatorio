@@ -23,6 +23,8 @@ resource "aws_launch_template" "ob-lt" {
 user_data = base64encode(<<-EOT
   #!/bin/bash
 
+  exec > >(tee /var/log/user-data.log | logger -t user-data) 2>&1
+
     # Instalamos Git si no está ya instalado
     if ! command -v git &> /dev/null; then
         sudo yum install -y git
@@ -67,8 +69,19 @@ user_data = base64encode(<<-EOT
     # Construimos la imagen de Docker
     sudo docker build -t ecommerce-app .
 
-    # Ejecutamos el contenedor en segundo plano
-    sudo docker run -d -p 80:80 ecommerce-app
+    if ! sudo docker run -d -p 80:80 \
+      -e DB_HOST="$DB_ENDPOINT" \
+      -e DB_NAME="$DB_NAME" \
+      -e DB_USER="$DB_USERNAME" \
+      -e DB_PASSWORD="$DB_PASSWORD" \
+      -e DB_PORT="3306" \
+      ecommerce-app; then
+      echo "ERROR: Falló la ejecución del contenedor Docker."
+      exit 1
+  fi
+  echo "Contenedor Docker iniciado."
+
+  echo "Script user-data finalizado con éxito."
 
 EOT
 )
