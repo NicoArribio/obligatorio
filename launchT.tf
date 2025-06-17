@@ -21,54 +21,59 @@ resource "aws_launch_template" "ob-lt" {
   # Script para instalar el servicio httpd al iniciar.
 
 user_data = base64encode(<<-EOT
-  #!/bin/bash
+#!/bin/bash
 
-    # Instalamos Git si no está ya instalado
-    if ! command -v git &> /dev/null; then
-        sudo yum install -y git
-    fi
+# Actualiza paquetes  
+  sudo yum update -y
 
-   # Traemos el repositorio
-    git clone https://github.com/NicoArribio/ModifiedApp
-    cd ModifiedApp
+# Insala GIT
+  sudo yum install -y git
 
-    # Instalamos MariaDB
-    sudo yum install -y mysql
+#Establece variables de entorno
 
-    # Obtenemos los valores de Terraform para el endpoint y credenciales
-    DB_ENDPOINT="${aws_db_instance.ob_database.address}"
-    DB_USERNAME="${var.db_username}"
-    DB_PASSWORD="${var.db_password}" # ¡ADVERTENCIA DE SEGURIDAD! Ver nota abajo.
-    DB_NAME="${var.db_name}"
-    SQL_FILE="db-settings.sql"
+  DB_ENDPOINT="${aws_db_instance.ob_database.address}" 
+  DB_USERNAME="${var.db_username}"
+  DB_PASSWORD="${var.db_password}"
+  DB_NAME="${var.db_name}"
+  SQL_FILE="db-settings.sql"
 
-    echo "Esperando a que la base de datos esté disponible..."
-  # Bucle para esperar a que la base de datos responda antes de intentar importar
-  # Esto es crucial ya que RDS puede tardar un poco en estar completamente operativo
-  until mysql -h $DB_ENDPOINT -u $DB_USERNAME -p$DB_PASSWORD -e "SELECT 1;" > /dev/null 2>&1; do
-      echo "Base de datos no disponible todavía, reintentando en 5 segundos..."
+ #Clonamos repositorio
+  git clone https://github.com/NicoArribio/ModifiedApp
+  cd ModifiedApp
+
+#Instalamos mysql
+
+  sudo yum install -y mysql
+
+# Instentamos conctar con base RDS hasta que la conexión sea exitosa
+
+  until mysql -h "$DB_ENDPOINT" -u "$DB_USERNAME" -p"$DB_PASSWORD" -e "SELECT 1;" > /dev/null 2>&1; do
       sleep 5
   done
-  echo "Base de datos disponible. Importando esquema..."
 
-  # Importar el archivo SQL
-  # Usamos "$DB_PASSWORD" entre comillas dobles por si la contraseña tiene caracteres especiales
-  mysql -h $DB_ENDPOINT -u $DB_USERNAME -p"$DB_PASSWORD" $DB_NAME < "$SQL_FILE"
+# Importamos estructura de base de datos
 
-  echo "Esquema de la base de datos importado."
+  mysql -h "$DB_ENDPOINT" -u "$DB_USERNAME" -p"$DB_PASSWORD" "$DB_NAME" < "$SQL_FILE"
 
-    # Instalamos Docker si no está ya instalado
-    if ! command -v docker &> /dev/null; then
-        sudo yum install -y docker
-        sudo systemctl start docker
-        sudo systemctl enable docker
-    fi
+# Instalamos Docker
 
-    # Construimos la imagen de Docker
-    sudo docker build -t ecommerce-app .
+  sudo yum install -y docker
+  sudo systemctl start docker
+  sudo systemctl enable docker
 
-    # Ejecutamos el contenedor en segundo plano
-    sudo docker run -d -p 80:80 ecommerce-app
+# Traemos imagen
+
+  sudo docker pull 181345/obligatorio:latest
+
+# Creamos contenedor
+
+  sudo docker run -d -p 80:80 \
+      -e DB_HOST="$DB_ENDPOINT" \
+      -e DB_NAME="$DB_NAME" \
+      -e DB_USER="$DB_USERNAME" \
+      -e DB_PASSWORD="$DB_PASSWORD" \
+      -e DB_PORT="3306" \
+      181345/obligatorio:latest
 
 EOT
 )

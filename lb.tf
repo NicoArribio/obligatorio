@@ -6,7 +6,19 @@ resource "aws_lb_target_group" "ob-tg" {
   target_type = "instance"
   protocol    = "HTTP"
   vpc_id      = aws_vpc.ob-vpc.id
-}
+
+  # health_check DEBE ESTAR ANIDADO AQUÍ DENTRO
+  health_check {
+    path                = "/"
+    protocol            = "HTTP"
+    port                = "traffic-port"
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 5
+    interval            = 30
+    matcher             = "200-299"
+  }
+} # <<-- Esta es la llave de cierre correcta para el target group
 
 # Creo el ALB
 
@@ -53,7 +65,7 @@ resource "aws_lb_listener_rule" "ob-listener-rule" {
   }
 }
 
-# Creo un Auti Scalling Group
+# Creo un Auto Scaling Group
 
 resource "aws_autoscaling_group" "ob-asg" {
   launch_template {
@@ -85,4 +97,41 @@ resource "aws_autoscaling_group" "ob-asg" {
     value               = "AutoScaling-Instance"
     propagate_at_launch = true
   }
+}
+
+# --- Políticas de Auto Scaling ---
+
+# Política de escalado ascendente (Scale Up)
+resource "aws_autoscaling_policy" "ob_scale_up_policy" {
+  name                   = "ob-asg-scale-up"
+  autoscaling_group_name = aws_autoscaling_group.ob-asg.name
+  policy_type            = "SimpleScaling"
+
+  scaling_adjustment     = 1
+  adjustment_type        = "ChangeInCapacity" # <<< AGREGAR ESTA LÍNEA
+  metric_aggregation_type = "Average"
+
+  cooldown = 300
+}
+
+# Política de escalado descendente (Scale Down)
+resource "aws_autoscaling_policy" "ob_scale_down_policy" {
+  name                   = "ob-asg-scale-down"
+  autoscaling_group_name = aws_autoscaling_group.ob-asg.name
+  policy_type            = "SimpleScaling"
+
+  scaling_adjustment     = -1
+  adjustment_type        = "ChangeInCapacity" # <<< AGREGAR ESTA LÍNEA
+  metric_aggregation_type = "Average"
+
+  cooldown = 300
+}
+
+# <<-- ESTA LLAVE EXTRA HA SIDO ELIMINADA -->>
+
+# le damos una salida al dns del load para que lo muestre.
+
+output "alb_dns_name" {
+  description = "The DNS name of the Application Load Balancer"
+  value       = aws_lb.ob-lb.dns_name
 }
