@@ -72,7 +72,6 @@ user_data = base64encode(<<-EOT
       -e DB_NAME="$DB_NAME" \
       -e DB_USER="$DB_USERNAME" \
       -e DB_PASSWORD="$DB_PASSWORD" \
-      -e DB_PORT="3306" \
       181345/obligatorio:latest
 
 EOT
