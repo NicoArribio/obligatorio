@@ -135,6 +135,8 @@ resource "aws_route_table_association" "ob-public_subnet_association2" {
   route_table_id = aws_route_table.ob-public-route-table.id
 }
 
+# Creo la asociación de la route table a una subnet privada
+
 resource "aws_route_table_association" "ob-private-subnet_association" {
   subnet_id      = aws_subnet.ob-private-subnet.id
   route_table_id = aws_route_table.ob-private-route-table.id

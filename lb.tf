@@ -7,7 +7,7 @@ resource "aws_lb_target_group" "ob-tg" {
   protocol    = "HTTP"
   vpc_id      = aws_vpc.ob-vpc.id
 
-  # health_check DEBE ESTAR ANIDADO AQUÍ DENTRO
+  # health_check 
   health_check {
     path                = "/"
     protocol            = "HTTP"
@@ -18,7 +18,7 @@ resource "aws_lb_target_group" "ob-tg" {
     interval            = 30
     matcher             = "200-299"
   }
-} # <<-- Esta es la llave de cierre correcta para el target group
+} 
 
 # Creo el ALB
 
@@ -126,8 +126,6 @@ resource "aws_autoscaling_policy" "ob_scale_down_policy" {
 
   cooldown = 300
 }
-
-# <<-- ESTA LLAVE EXTRA HA SIDO ELIMINADA -->>
 
 # le damos una salida al dns del load para que lo muestre.
 

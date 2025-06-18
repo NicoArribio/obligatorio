@@ -27,10 +27,10 @@ resource "aws_db_instance" "ob_database" {
   vpc_security_group_ids = [aws_security_group.ob-sg.id]
 
   # --- PARÁMETROS IMPORTANTES ---
-  multi_az               = false # <-- CAMBIO CLAVE: Se desactiva Multi-AZ por limitaciones de la cuenta.
-  backup_retention_period = 7      # <-- SE MANTIENE: Esta es tu solución de respaldos.
-  publicly_accessible  = false # MUY IMPORTANTE: La BD no será accesible desde internet.
-  skip_final_snapshot  = true  # Facilita la destrucción en entornos de prueba.
+  multi_az               = false # Se desactiva Multi-AZ por limitaciones de la cuenta.
+  backup_retention_period = 7      # Solución de respaldos. Guarda 7
+  publicly_accessible  = false # La BD no será accesible desde internet.
+  skip_final_snapshot  = true  # Facilita la destrucción en entornos de prueba como el nuestro.
 
   tags = {
     Name = "OB-Database"
