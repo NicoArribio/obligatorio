@@ -8,6 +8,11 @@ data "aws_ami" "amazon_linux_2" {
   }
 }
 
+# Crear disco EFS
+
+# Crear instancia bastion
+# Mapear disco EFS
+
 # Plantilla  para el Auto Scaling
 resource "aws_launch_template" "ob-lt" {
    name = "Launch-template-obligatorio"
@@ -22,6 +27,8 @@ resource "aws_launch_template" "ob-lt" {
 
 user_data = base64encode(<<-EOT
 #!/bin/bash
+
+# Mapear disco EFS
 
 # Actualiza paquetes  
   sudo yum update -y
