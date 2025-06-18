@@ -1,4 +1,4 @@
-#Búsqueda de la última AMI de Amazon Linux 2
+#Busqueda de la ultima AMI de Amazon Linux 2
 data "aws_ami" "amazon_linux_2" {
   most_recent = true
   owners      = ["amazon"]
@@ -8,7 +8,7 @@ data "aws_ami" "amazon_linux_2" {
   }
 }
 
-# Plantilla Launch Template para el Auto Scaling
+# Plantilla  para el Auto Scaling
 resource "aws_launch_template" "ob-lt" {
    name = "Launch-template-obligatorio"
   image_id      = data.aws_ami.amazon_linux_2.id
@@ -18,7 +18,7 @@ resource "aws_launch_template" "ob-lt" {
   #Asocia el Security Group creado.
   vpc_security_group_ids = [aws_security_group.ob-sg.id]
 
-  # Script para instalar el servicio httpd al iniciar.
+  # Script al iniciar la instancia.
 
 user_data = base64encode(<<-EOT
 #!/bin/bash

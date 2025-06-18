@@ -1,9 +1,11 @@
+#Security Groups
+
 resource "aws_security_group" "ob-sg" {
   name        = "ob-sg"
   description = "Permite ingreso http, https y ssh"
   vpc_id      = aws_vpc.ob-vpc.id
 
-  # Reglas de entrada
+  # Reglas de entrada http,https y puerto 3306 de la base de datos
   ingress {
     description = "Allow HTTP"
     from_port   = 80
@@ -26,7 +28,7 @@ resource "aws_security_group" "ob-sg" {
     to_port     = 3306
     protocol    = "tcp"
     
-    # Sólo permite consultas desde nuestras subnets privadas
+    # Solo permite consultas desde nuestras subnets privadas
     cidr_blocks = [aws_subnet.ob-private-subnet.cidr_block, 
                    aws_subnet.ob-private-subnet2.cidr_block] 
   }

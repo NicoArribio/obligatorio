@@ -9,7 +9,7 @@ resource "aws_vpc" "ob-vpc" {
   }
 }
 
-# Creo la SUBNET PÚBLICA 1
+# Creo la subnet publica 1
 
 resource "aws_subnet" "ob-public-subnet" {
   vpc_id                  = aws_vpc.ob-vpc.id
@@ -21,7 +21,7 @@ resource "aws_subnet" "ob-public-subnet" {
   }
 }
 
-# Creo la SUBNET PÚBLICA 2
+# Creo la subnet publica 2
 
 resource "aws_subnet" "ob-public-subnet2" {
   vpc_id                  = aws_vpc.ob-vpc.id
@@ -33,7 +33,7 @@ resource "aws_subnet" "ob-public-subnet2" {
   }
 }
 
-# Creo la SUBNET PRIVADA 1
+# Creo la subnet privada 1
 
 resource "aws_subnet" "ob-private-subnet" {
   vpc_id                  = aws_vpc.ob-vpc.id
@@ -45,7 +45,7 @@ resource "aws_subnet" "ob-private-subnet" {
   }
 }
 
-# Creo la SUBNET PRIVADA 2
+# Creamos la subnet privada 2
 
 resource "aws_subnet" "ob-private-subnet2" {
   vpc_id                  = aws_vpc.ob-vpc.id
@@ -57,7 +57,7 @@ resource "aws_subnet" "ob-private-subnet2" {
   }
 }
 
-# Creo el INTERNET GATEWAY
+# Creamos el INTERNET GATEWAY
 
 resource "aws_internet_gateway" "ob-igw" {
   vpc_id = aws_vpc.ob-vpc.id
@@ -66,8 +66,8 @@ resource "aws_internet_gateway" "ob-igw" {
   }
 }
 
-# Creo el NAT INTERNET GATEWAY
-  # Primero creo el Elastic IP
+# Creamos el NAT INTERNET GATEWAY
+  # Primero creamos el Elastic IP
 
 resource "aws_eip" "ob-nat-eip" {
   domain = "vpc"
@@ -87,7 +87,7 @@ resource "aws_nat_gateway" "ob-nigw" {
 }
 
 
-#Creo ruas de salida a internet para el IGW
+#Creo rutas de salida a internet para el IGW
 
 resource "aws_route_table" "ob-public-route-table" {
   vpc_id = aws_vpc.ob-vpc.id
@@ -123,7 +123,7 @@ resource "aws_route_table" "ob-private-route-table" {
   }
 }
 
-# Creo la asociación de la route table a una subnet pública
+# Creo la asociacion de la route table a una subnet pública
 
 resource "aws_route_table_association" "ob-public_subnet_association1" {
   subnet_id      = aws_subnet.ob-public-subnet.id
@@ -135,7 +135,7 @@ resource "aws_route_table_association" "ob-public_subnet_association2" {
   route_table_id = aws_route_table.ob-public-route-table.id
 }
 
-# Creo la asociación de la route table a una subnet privada
+# Creo la asociacion de la route table a una subnet privada
 
 resource "aws_route_table_association" "ob-private-subnet_association" {
   subnet_id      = aws_subnet.ob-private-subnet.id
