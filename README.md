@@ -1,10 +1,13 @@
 🛒 Online E-commerce
 
+
 Este es un proyecto de aplicación web de comercio electrónico desarrollado en PHP, diseñado para ser desplegado de manera elástica y observable en Amazon Web Services (AWS) utilizando Terraform como herramienta de Infraestructura como Código (IaC).
 
 El proyecto utiliza un sistema de enrutamiento personalizado en PHP, donde todas las rutas son gestionadas desde index.php, en lugar de depender del servidor web para mapear rutas a archivos físicos. La aplicación está contenerizada con Docker para facilitar su despliegque y portabilidad.
 
+
 🚀 Objetivo
+
 
 El objetivo principal de este proyecto es explorar la migración y modernización del componente frontend de una solución de e-commerce existente (actualmente en infraestructura on-premise) hacia la Cloud Pública de Amazon Web Services (AWS).
 
@@ -18,7 +21,9 @@ Demostrar un despliegue elástico y robusto en AWS utilizando Infraestructura co
 
 Aplicar principios de alta disponibilidad, seguridad y monitoreo automatizado para asegurar la performance y la experiencia del usuario.
 
+
 ☁️ Arquitectura del Despliegue en AWS
+
 
 La infraestructura se diseña para ser elástica y resiliente, distribuida en múltiples Zonas de Disponibilidad (AZs) dentro de una Virtual Private Cloud (VPC) dedicada.
 
@@ -44,7 +49,9 @@ CloudWatch Alarms: Monitorean el rendimiento de las instancias y activan políti
 
 GitHub: Repositorio de código fuente, clonado por las instancias al iniciarse.
 
+
 💻 Componentes de la Aplicación
+
 
 Aplicación PHP: El core del comercio electrónico, con lógica de negocio para productos, usuarios, carritos y órdenes.
 
@@ -170,9 +177,9 @@ Configurar un pipeline de CI/CD (ej., con AWS CodePipeline/CodeBuild o GitHub Ac
 
 Instancia Bastión para Mantenimiento:
 
-Implementar una instancia Bastión (o "Jump Host") en una subred pública para acceso seguro y controlado por SSH a las instancias de aplicación en las subredes privadas. Esto centraliza el acceso de administración y reduce la superficie de ataque.
+Implementar una instancia Bastión en una subred pública para acceso seguro y controlado por SSH a las instancias de aplicación en las subredes privadas. Esto centraliza el acceso de administración.
 
-🔑 Credenciales de Administración (¡Solo para Entornos de Prueba!)
+🔑 Credenciales de Administración (Solo para Entornos de Prueba)
 Para acceder al panel de administración de la aplicación:
 
 URI: /admin/login
