@@ -1,12 +1,12 @@
-🛒 Online E-commerce
+🛒 **Online E-commerce**<br/><br/>
 
 
 Este es un proyecto de aplicación web de comercio electrónico desarrollado en PHP, diseñado para ser desplegado de manera elástica y observable en Amazon Web Services (AWS) utilizando Terraform como herramienta de Infraestructura como Código (IaC).
 
-El proyecto utiliza un sistema de enrutamiento personalizado en PHP, donde todas las rutas son gestionadas desde index.php, en lugar de depender del servidor web para mapear rutas a archivos físicos. La aplicación está contenerizada con Docker para facilitar su despliegque y portabilidad.
+El proyecto utiliza un sistema de enrutamiento personalizado en PHP, donde todas las rutas son gestionadas desde index.php, en lugar de depender del servidor web para mapear rutas a archivos físicos. La aplicación está contenerizada con Docker para facilitar su despliegque y portabilidad.<br/><br/>
 
 
-🚀 Objetivo
+🚀 **Objetivo**<br/><br/>
 
 
 El objetivo principal de este proyecto es explorar la migración y modernización del componente frontend de una solución de e-commerce existente (actualmente en infraestructura on-premise) hacia la Cloud Pública de Amazon Web Services (AWS).
@@ -19,10 +19,10 @@ Construir un frontend de tienda online funcional en PHP que permita a los usuari
 
 Demostrar un despliegue elástico y robusto en AWS utilizando Infraestructura como Código (Terraform) y contenerización (Docker).
 
-Aplicar principios de alta disponibilidad, seguridad y monitoreo automatizado para asegurar la performance y la experiencia del usuario.
+Aplicar principios de alta disponibilidad, seguridad y monitoreo automatizado para asegurar la performance y la experiencia del usuario.<br/><br/>
 
 
-☁️ Arquitectura del Despliegue en AWS
+☁️ **Arquitectura del Despliegue en AWS**<br/><br/>
 
 
 La infraestructura se diseña para ser elástica y resiliente, distribuida en múltiples Zonas de Disponibilidad (AZs) dentro de una Virtual Private Cloud (VPC) dedicada.
@@ -47,10 +47,10 @@ NAT Gateway: Permite que las instancias en subredes privadas inicien conexiones 
 
 CloudWatch Alarms: Monitorean el rendimiento de las instancias y activan políticas de autoescalado.
 
-GitHub: Repositorio de código fuente, clonado por las instancias al iniciarse.
+GitHub: Repositorio de código fuente, clonado por las instancias al iniciarse.<br/><br/>
 
 
-💻 Componentes de la Aplicación
+💻 **Componentes de la Aplicación**<br/><br/>
 
 
 Aplicación PHP: El core del comercio electrónico, con lógica de negocio para productos, usuarios, carritos y órdenes.
@@ -61,9 +61,9 @@ Conexión a Base de Datos: bk_db.php establece la conexión PDO a la base de dat
 
 Protección CSRF: Implementar una clase CSRF (csrf.php) para generar y validar tokens de seguridad, protegiendo contra ataques de falsificación de solicitudes entre sitios.
 
-Dockerfile: Define el entorno de ejecución (PHP 8.2 con Apache) y empaqueta la aplicación en una imagen Docker, asegurando un entorno consistente en todas las instancias.
+Dockerfile: Define el entorno de ejecución (PHP 8.2 con Apache) y empaqueta la aplicación en una imagen Docker, asegurando un entorno consistente en todas las instancias.<br/><br/>
 
-🔧 Componentes de la Infraestructura AWS (Terraform)
+🔧 **Componentes de la Infraestructura AWS (Terraform)**<br/><br/>
 
 Todos los recursos de infraestructura se definen y gestionan mediante Terraform.
 
@@ -79,9 +79,11 @@ Load Balancer y Auto Scaling (lb.tf): Configura el ALB, sus listeners y Target G
 
 Monitoreo (monitoring.tf):: Define las alarmas de CloudWatch que monitorean la CPUUtilization del ASG y activan las políticas de autoescalado.
 
-Variables (variables.tf, terraform.tfvars): Definen los parámetros configurables para el despliegue (región, CIDRs, credenciales DB, etc.).
+Variables (variables.tf, terraform.tfvars): Definen los parámetros configurables para el despliegue (región, CIDRs, credenciales DB, etc.).<br/><br/>
+<a href="https://ibb.co/4HgFZYp"><img src="https://i.ibb.co/6kJyR1F/Captura-de-pantalla-2025-06-23-145232.png" alt="Captura-de-pantalla-2025-06-23-145232" border="0"></a>
 
-✨ Características Clave y Mejoras Implementadas
+
+✨ **Características Clave y Mejoras Implementadas**<br/><br/>
 
 Despliegue Automatizado (IaC): Toda la infraestructura se define en código Terraform, permitiendo un despliegue repetible y consistente.
 
@@ -95,13 +97,13 @@ Seguridad de Red: Uso estratégico de Security Groups y subredes privadas para a
 
 Base de Datos Gestionada: RDS simplifica la administración de la base de datos, incluyendo respaldos automáticos.
 
-Contenerización: Uso de Docker para un entorno de aplicación portátil y aislado.
+Contenerización: Uso de Docker para un entorno de aplicación portátil y aislado.<br/><br/>
 
-🚀 Guía de Despliegue Rápido
+🚀 **Guía de Despliegue Rápido**<br/><br/>
 
-Sigue estos pasos para desplegar la aplicación en tu cuenta de AWS utilizando Terraform.
+Sigue estos pasos para desplegar la aplicación en tu cuenta de AWS utilizando Terraform.<br/>
 
-Prerrequisitos:
+**Prerrequisitos:**
 Acceso a una Cuenta de AWS: Necesitarás una cuenta AWS activa con permisos suficientes para crear y gestionar recursos en EC2, VPC, RDS, S3, IAM y CloudWatch.
 
 AWS CLI: El AWS Command Line Interface debe estar instalado y configurado con tus credenciales.
@@ -110,23 +112,23 @@ Terraform: Terraform (versión 1.0+ recomendada) debe estar instalado.
 
 Git: Git debe estar instalado.
 
-Clave SSH de AWS: Debes tener una clave SSH (.pem o .ppk) existente en tu cuenta de AWS para la región us-east-1 (el key_name por defecto en terraform.tfvars es vockey).
+Clave SSH de AWS: Debes tener una clave SSH (.pem o .ppk) existente en tu cuenta de AWS para la región us-east-1 (el key_name por defecto en terraform.tfvars es vockey).<br/>
 
-1. Clonar el Repositorio:
+1. **Clonar el Repositorio:**
    
 git clone https://github.com/NicoArribio/obligatorio
 
 
-2. Inicializar Terraform:
+2. **Inicializar Terraform:**
 terraform init
 
 3. Planificar el Despliegue:
 terraform plan
 
-4. Aplicar el Despliegue:
+4. **Aplicar el Despliegue:**
 terraform apply
 
-5. Acceder a la Aplicación:
+5.**Acceder a la Aplicación:**
 Una vez que terraform apply finalice con éxito, Terraform mostrará el DNS del Application Load Balancer (ALB) en la salida.
 
 Copia el valor del alb_dns_name que se muestra.
@@ -135,9 +137,10 @@ Pega este DNS en tu navegador web. La aplicación debería estar accesible.
 
 Ejemplo de URL: http://ob-lb-xxxxxxxxxxxx.us-east-1.elb.amazonaws.com
 
-Para acceder al panel de administración, usa: http://<ALB_DNS_NAME>/admin/login con las credenciales por defecto
+Para acceder al panel de administración, usa: http://<ALB_DNS_NAME>/admin/login con las credenciales por defecto<br/><br/>
 
-🚧 Desafíos y Aprendizajes
+🚧 **Desafíos y Aprendizajes**<br/><br/>
+
 Durante el desarrollo y despliegue del proyecto, surgieron varios desafíos que proporcionaron valiosas lecciones:
 
 Gestión del Estado de Terraform: La importancia de mantener el estado de Terraform (.tfstate) sincronizado con la infraestructura real en AWS. Uso de terraform import y terraform state rm para resolver inconsistencias.
@@ -146,9 +149,9 @@ Resolución de Dependencias en la Nube: Dificultades para eliminar recursos debi
 
 Restricciones de Cuentas Educativas / IAM: Limitaciones de permisos (iam:CreateRole) para crear nuevos roles IAM, lo que impidió la implementación de la centralización de logs con el Agente de CloudWatch Logs, destacando la importancia de la gestión de permisos en entornos compartidos.
 
-Depuración de Código Terraform: Aprender a interpretar mensajes de error detallados del proveedor AWS y corregir la sintaxis específica (scaling_adjustment en políticas SimpleScaling, sintaxis de S3 acl y ownership_controls).
+Depuración de Código Terraform: Aprender a interpretar mensajes de error detallados del proveedor AWS y corregir la sintaxis específica (scaling_adjustment en políticas SimpleScaling, sintaxis de S3 acl y ownership_controls).<br/><br/>
 
-🚀 Mejoras Futuras
+🚀 **Mejoras Futuras**<br/><br/>
 Para continuar evolucionando este proyecto, se proponen las siguientes mejoras:
 
 Centralización de Logs:
@@ -177,9 +180,9 @@ Configurar un pipeline de CI/CD (ej., con AWS CodePipeline/CodeBuild o GitHub Ac
 
 Instancia Bastión para Mantenimiento:
 
-Implementar una instancia Bastión en una subred pública para acceso seguro y controlado por SSH a las instancias de aplicación en las subredes privadas. Esto centraliza el acceso de administración.
+Implementar una instancia Bastión en una subred pública para acceso seguro y controlado por SSH a las instancias de aplicación en las subredes privadas. Esto centraliza el acceso de administración.<br/><br/>
 
-🔑 Credenciales de Administración (Solo para Entornos de Prueba)
+🔑 **Credenciales de Administración (Solo para Entornos de Prueba)**<br/><br/>
 Para acceder al panel de administración de la aplicación:
 
 URI: /admin/login
