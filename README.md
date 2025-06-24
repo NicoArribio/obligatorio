@@ -139,8 +139,9 @@ Ejemplo de URL: http://ob-lb-xxxxxxxxxxxx.us-east-1.elb.amazonaws.com
 
 Para acceder al panel de administración, usa: http://<ALB_DNS_NAME>/admin/login con las credenciales por defecto<br/><br/>
 
+---------------------------------------------------- **DEMOSTRACION DEL DESPLIEGUE EN AWS** ----------------------------------------------------
 
-[![Demostración del Despliegue en AWS](https://img.youtube.com/vi/IHTddFF8wyY/maxresdefault.jpg)](https://www.youtube.com/watch?v=IHTddFF8wyY)
+[![Demostración del Despliegue en AWS](https://img.youtube.com/vi/IHTddFF8wyY/maxresdefault.jpg)](https://www.youtube.com/watch?v=IHTddFF8wyY)<br/><br/><br/><br/>
 
 🚧 **Desafíos y Aprendizajes**<br/><br/>
 
@@ -176,10 +177,6 @@ Utilizar AWS Secrets Manager o AWS Parameter Store para almacenar y recuperar de
 Alta Disponibilidad de Base de Datos:
 
 Configurar la instancia RDS en modo Multi-AZ para proporcionar una réplica en espera en otra Zona de Disponibilidad, mejorando la tolerancia a fallos.
-
-CI/CD (Integración Continua/Despliegue Continuo):
-
-Configurar un pipeline de CI/CD (ej., con AWS CodePipeline/CodeBuild o GitHub Actions) para automatizar las actualizaciones de la aplicación.
 
 Instancia Bastión para Mantenimiento:
 
