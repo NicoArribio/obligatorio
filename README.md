@@ -57,7 +57,7 @@ Aplicación PHP: El core del comercio electrónico, con lógica de negocio para 
 
 Enrutamiento Personalizado: Gestionado por las clases Route en router.php e index.php, permitiendo URLs amigables sin depender de configuraciones de servidor web complejas.
 
-Conexión a Base de Datos: bk_db.php establece la conexión PDO a la base de datos MySQL, obteniendo las credenciales de variables de entorno para mayor seguridad.
+Conexión a Base de Datos: db.php establece la conexión PDO a la base de datos MySQL, obteniendo las credenciales de variables de entorno para mayor seguridad.
 
 Protección CSRF: Implementar una clase CSRF (csrf.php) para generar y validar tokens de seguridad, protegiendo contra ataques de falsificación de solicitudes entre sitios.
 
