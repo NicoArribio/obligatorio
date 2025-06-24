@@ -139,7 +139,7 @@ Ejemplo de URL: http://ob-lb-xxxxxxxxxxxx.us-east-1.elb.amazonaws.com
 
 Para acceder al panel de administración, usa: http://<ALB_DNS_NAME>/admin/login con las credenciales por defecto<br/><br/>
 
----------------------------------------------------- **DEMOSTRACION DEL DESPLIEGUE EN AWS** ----------------------------------------------------
+---------------------------------------------------- **DEMOSTRACIÓN DEL DESPLIEGUE EN AWS** ----------------------------------------------------
 
 [![Demostración del Despliegue en AWS](https://img.youtube.com/vi/IHTddFF8wyY/0.jpg)](https://www.youtube.com/watch?v=IHTddFF8wyY)<br/><br/><br/><br/>
 
