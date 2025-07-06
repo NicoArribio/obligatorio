@@ -172,8 +172,6 @@ Implementar redirección automática de HTTP a HTTPS.
 
 Gestión Segura de Secretos:
 
-Utilizar AWS Secrets Manager o AWS Parameter Store para almacenar y recuperar de forma segura las credenciales de la base de datos, eliminándolas del terraform.tfvars.
-
 Alta Disponibilidad de Base de Datos:
 
 Configurar la instancia RDS en modo Multi-AZ para proporcionar una réplica en espera en otra Zona de Disponibilidad, mejorando la tolerancia a fallos.
