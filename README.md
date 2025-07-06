@@ -170,8 +170,6 @@ Configurar un Listener HTTPS en el ALB con un certificado SSL/TLS de AWS Certifi
 
 Implementar redirección automática de HTTP a HTTPS.
 
-Gestión Segura de Secretos:
-
 Alta Disponibilidad de Base de Datos:
 
 Configurar la instancia RDS en modo Multi-AZ para proporcionar una réplica en espera en otra Zona de Disponibilidad, mejorando la tolerancia a fallos.
